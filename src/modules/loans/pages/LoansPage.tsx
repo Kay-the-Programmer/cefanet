@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Search, Plus, Eye, CheckCircle, XCircle, Clock,
   HandCoins, TrendingUp, Users, CreditCard, ClipboardCheck,
@@ -16,7 +17,6 @@ import {
   DemographicGroup, BusinessSector, LOAN_STATUS_FLOW,
 } from '../types';
 import { StatCard } from '../../../shared/components/ui/StatCard';
-import { LoanApplicationModal } from '../components/LoanApplicationModal';
 import { RepaymentModal } from '../components/RepaymentModal';
 import { BusinessSurveyModal } from '../components/BusinessSurveyModal';
 import { useAuth } from '../../auth/AuthContext';
@@ -66,7 +66,7 @@ export const LoansPage: React.FC = () => {
   const [constituencyFilter, setConstituencyFilter] = useState(isNational ? 'all' : (user?.constituencyId ?? 'all'));
   const [demographicFilter, setDemographicFilter] = useState('all');
 
-  const [appModalOpen, setAppModalOpen] = useState(false);
+  const navigate = useNavigate();
   const [repayModalOpen, setRepayModalOpen] = useState(false);
   const [surveyModalOpen, setSurveyModalOpen] = useState(false);
   const [selectedLoan, setSelectedLoan] = useState<LoanGrantApplication | null>(null);
@@ -126,7 +126,7 @@ export const LoansPage: React.FC = () => {
           <p className="text-[11px] text-muted-foreground uppercase font-bold tracking-tight">SDG 1 & 8 — No Poverty · Decent Work</p>
         </div>
         {canEdit && (
-          <button onClick={() => setAppModalOpen(true)} className="btn-primary flex items-center gap-2">
+          <button onClick={() => navigate('/loans/apply')} className="btn-primary flex items-center gap-2">
             <Plus className="w-4 h-4" /> New Application
           </button>
         )}
@@ -492,7 +492,6 @@ export const LoansPage: React.FC = () => {
 
       {/* Modals */}
       <AnimatePresence>
-        {appModalOpen && <LoanApplicationModal onClose={() => setAppModalOpen(false)} onSuccess={load} />}
         {repayModalOpen && selectedLoan && (
           <RepaymentModal loan={selectedLoan} isOpen={repayModalOpen} onClose={() => setRepayModalOpen(false)} onSuccess={load} />
         )}

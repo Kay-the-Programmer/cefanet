@@ -14,6 +14,7 @@ import { BursaryApplicationPage } from './modules/bursaries/pages/BursaryApplica
 import { BursaryDetailPage } from './modules/bursaries/pages/BursaryDetailPage';
 import { BursaryReportsPage } from './modules/bursaries/pages/BursaryReportsPage';
 import { LoansPage } from './modules/loans/pages/LoansPage';
+import { LoanApplicationPage } from './modules/loans/pages/LoanApplicationPage';
 import { BusinessMonitoringPage } from './modules/monitoring/pages/BusinessMonitoringPage';
 import { EfficiencyDashboardPage } from './modules/monitoring/pages/EfficiencyDashboardPage';
 import { MonitoringHubPage } from './modules/monitoring/pages/MonitoringHubPage';
@@ -143,6 +144,12 @@ export default function App() {
       <Route path="/loans" element={
         <ProtectedRoute requiredRoles={[UserRole.ADMIN, UserRole.COUNCIL_OFFICER, UserRole.FINANCE_OFFICER, UserRole.ME_OFFICER, UserRole.FIELD_OFFICER, UserRole.AUDITOR]}>
           <LoansPage />
+        </ProtectedRoute>
+      } />
+
+      <Route path="/loans/apply" element={
+        <ProtectedRoute requiredRoles={[UserRole.ADMIN, UserRole.COUNCIL_OFFICER, UserRole.BENEFICIARY]}>
+          <LoanApplicationPage />
         </ProtectedRoute>
       } />
 

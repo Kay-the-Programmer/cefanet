@@ -99,141 +99,180 @@ const SessionModal: React.FC<SessionModalProps> = ({ onClose, onSave }) => {
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="divide-y divide-border">
-
-          {/* Session type selector */}
-          <div className="p-5 space-y-3">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Session Type</p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+          {/* Section 1: Session Type */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <span className="w-1 h-4 bg-primary"></span>
+              <h3 className="label-caps !text-foreground">1. Session Type</h3>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {(Object.keys(SESSION_TYPE_META) as CommunitySession['sessionType'][]).map(t => {
                 const meta = SESSION_TYPE_META[t];
+                const isActive = form.sessionType === t;
                 return (
                   <button key={t} type="button"
                     onClick={() => setForm(f => ({ ...f, sessionType: t }))}
-                    className={`py-3 text-[10px] font-bold uppercase border transition-colors flex flex-col items-center gap-1.5 ${
-                      form.sessionType === t ? 'bg-primary text-white border-primary' : 'bg-muted border-border text-muted-foreground hover:border-primary'
+                    className={`p-4 border transition-all flex flex-col items-center justify-center gap-2 group ${
+                      isActive 
+                        ? 'bg-primary/10 border-primary text-primary' 
+                        : 'bg-muted/50 border-border text-muted-foreground hover:border-primary/50'
                     }`}>
-                    {meta.icon}
-                    {meta.label}
+                    <div className={`p-2 rounded-none transition-colors ${isActive ? 'bg-primary text-white' : 'bg-background group-hover:bg-primary/5'}`}>
+                      {meta.icon}
+                    </div>
+                    <span className="text-[9px] font-bold uppercase tracking-wider">{meta.label}</span>
                   </button>
                 );
               })}
             </div>
           </div>
 
-          {/* Basic details */}
-          <div className="p-5 space-y-3">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Session Details</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <div className="space-y-1 md:col-span-2">
-                <label className="text-[10px] font-bold uppercase text-muted-foreground">Title <span className="text-red-500">*</span></label>
+          {/* Section 2: Session Details */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <span className="w-1 h-4 bg-primary"></span>
+              <h3 className="label-caps !text-foreground">2. Session Details</h3>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-muted/20 p-4 border border-border">
+              <div className="space-y-1.5 md:col-span-2">
+                <label className="label-caps">Session Title <span className="text-destructive">*</span></label>
                 <input required className="input-field" placeholder="e.g. Q2 Community Budget Dialogue" value={form.title} onChange={set('title')} />
               </div>
-              <div className="space-y-1">
-                <label className="text-[10px] font-bold uppercase text-muted-foreground">Date &amp; Time <span className="text-red-500">*</span></label>
+              <div className="space-y-1.5">
+                <label className="label-caps">Date & Time <span className="text-destructive">*</span></label>
                 <input required type="datetime-local" className="input-field" value={form.date} onChange={set('date')} />
               </div>
-              <div className="space-y-1">
-                <label className="text-[10px] font-bold uppercase text-muted-foreground">Constituency</label>
+              <div className="space-y-1.5">
+                <label className="label-caps">Constituency</label>
                 <select className="input-field" value={form.constituencyId} onChange={set('constituencyId')}>
                   {MOCK_CONSTITUENCIES.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                 </select>
               </div>
-              <div className="space-y-1 md:col-span-2">
-                <label className="text-[10px] font-bold uppercase text-muted-foreground">Location</label>
-                <input className="input-field" placeholder="e.g. Chilenje Community Hall" value={form.location} onChange={set('location')} />
-              </div>
-            </div>
-          </div>
-
-          {/* Attendance — gender disaggregated */}
-          <div className="p-5 space-y-3">
-            <div className="flex items-center justify-between">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-                Attendance (disaggregated by gender)
-              </p>
-              <span className="text-[10px] font-bold text-primary font-mono">{total} total</span>
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-1">
-                <label className="text-[10px] font-bold uppercase text-muted-foreground">Female</label>
-                <input type="number" min={0} className="input-field text-center font-mono" value={form.femaleAttendees} onChange={set('femaleAttendees')} />
-              </div>
-              <div className="space-y-1">
-                <label className="text-[10px] font-bold uppercase text-muted-foreground">Male</label>
-                <input type="number" min={0} className="input-field text-center font-mono" value={form.maleAttendees} onChange={set('maleAttendees')} />
-              </div>
-            </div>
-            {total > 0 && (
-              <div className="space-y-1">
-                <div className="flex justify-between text-[9px] font-bold uppercase text-muted-foreground">
-                  <span>Female {Math.round((parseInt(form.femaleAttendees) / total) * 100)}%</span>
-                  <span>Male {Math.round((parseInt(form.maleAttendees) / total) * 100)}%</span>
-                </div>
-                <div className="h-2 bg-muted flex">
-                  <div className="h-2 bg-pink-500" style={{ width: `${(parseInt(form.femaleAttendees) / total) * 100}%` }} />
-                  <div className="h-2 bg-blue-500" style={{ width: `${(parseInt(form.maleAttendees) / total) * 100}%` }} />
+              <div className="space-y-1.5 md:col-span-2">
+                <label className="label-caps">Meeting Location</label>
+                <div className="relative">
+                  <MapPin className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground/50" />
+                  <input className="input-field !pl-10" placeholder="e.g. Chilenje Community Hall" value={form.location} onChange={set('location')} />
                 </div>
               </div>
-            )}
-          </div>
-
-          {/* Issues & Actions */}
-          <div className="p-5 space-y-3">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Issues &amp; Commitments</p>
-            <div className="space-y-1">
-              <label className="text-[10px] font-bold uppercase text-muted-foreground">Issues Raised</label>
-              <textarea rows={3} className="input-field resize-none" placeholder="Issues and concerns raised by community members…"
-                value={form.issuesRaised} onChange={set('issuesRaised')} />
-            </div>
-            <div className="space-y-1">
-              <label className="text-[10px] font-bold uppercase text-muted-foreground">Actions Committed</label>
-              <textarea rows={3} className="input-field resize-none" placeholder="Actions committed by officers or councillors…"
-                value={form.actionsCommitted} onChange={set('actionsCommitted')} />
-            </div>
-            <div className="space-y-1">
-              <label className="text-[10px] font-bold uppercase text-muted-foreground">Key Outcomes / Summary</label>
-              <textarea rows={2} className="input-field resize-none" placeholder="Overall outcomes of the session…"
-                value={form.keyOutcomes} onChange={set('keyOutcomes')} />
-            </div>
-            <div className="space-y-1">
-              <label className="text-[10px] font-bold uppercase text-muted-foreground">Community Feedback Incorporated?</label>
-              <select className="input-field" value={form.feedbackIncorporated} onChange={set('feedbackIncorporated')}>
-                <option value="NO">No (Not yet acted upon)</option>
-                <option value="PARTIAL">Partial (Some actions taken)</option>
-                <option value="YES">Yes (Fully incorporated)</option>
-              </select>
             </div>
           </div>
 
-          {/* Attendance sheet upload */}
-          <div className="p-5 space-y-3">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Attendance Sheet Upload</p>
-            <input ref={fileRef} type="file" accept=".pdf,.jpg,.jpeg,.png,.xlsx" className="hidden" onChange={handleFile} />
-            {attendanceFile ? (
-              <div className="flex items-center justify-between bg-muted/40 px-3 py-2">
-                <span className="text-[10px] font-bold flex items-center gap-2">
-                  <Upload className="w-3.5 h-3.5 text-emerald-500" />
-                  {attendanceFile.name}
-                  <span className="text-muted-foreground font-normal">({(attendanceFile.size / 1024).toFixed(0)} KB)</span>
-                </span>
-                <button type="button" onClick={() => setAttendanceFile(undefined)} className="text-muted-foreground hover:text-red-500">
-                  <X className="w-3.5 h-3.5" />
-                </button>
+          {/* Section 3: Attendance */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <span className="w-1 h-4 bg-primary"></span>
+              <h3 className="label-caps !text-foreground">3. Attendance Tracking</h3>
+            </div>
+            <div className="bg-muted/20 p-4 border border-border space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="label-caps">Female Attendees</label>
+                  <input type="number" min={0} className="input-field text-center font-mono" value={form.femaleAttendees} onChange={set('femaleAttendees')} />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="label-caps">Male Attendees</label>
+                  <input type="number" min={0} className="input-field text-center font-mono" value={form.maleAttendees} onChange={set('maleAttendees')} />
+                </div>
               </div>
-            ) : (
-              <button type="button" onClick={() => fileRef.current?.click()}
-                className="btn-outline w-full flex items-center justify-center gap-2 text-[10px] py-2">
-                <Upload className="w-4 h-4" />
-                Upload Attendance Sheet (PDF, image, or Excel)
-              </button>
-            )}
-            {fileError && <p className="text-[10px] text-red-500 font-bold">{fileError}</p>}
+              
+              {total > 0 && (
+                <div className="space-y-2 pt-2 border-t border-border/50">
+                  <div className="flex justify-between items-end">
+                    <div className="space-y-1">
+                      <p className="text-[10px] font-bold uppercase text-foreground">Gender Distribution</p>
+                      <p className="text-[9px] font-bold text-muted-foreground uppercase">{total} Total Participants</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-[10px] font-bold text-primary font-mono">{Math.round((parseInt(form.femaleAttendees) / total) * 100)}% Female</p>
+                    </div>
+                  </div>
+                  <div className="h-2 bg-muted flex overflow-hidden">
+                    <div className="h-2 bg-pink-500 transition-all duration-500" style={{ width: `${(parseInt(form.femaleAttendees) / total) * 100}%` }} />
+                    <div className="h-2 bg-blue-500 transition-all duration-500" style={{ width: `${(parseInt(form.maleAttendees) / total) * 100}%` }} />
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
 
-          <div className="p-5 flex gap-3">
-            <button type="button" onClick={onClose} className="btn-outline flex-1">Cancel</button>
-            <button type="submit" className="btn-primary flex-1">Save Session</button>
+          {/* Section 4: Outcomes */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <span className="w-1 h-4 bg-primary"></span>
+              <h3 className="label-caps !text-foreground">4. Issues & Outcomes</h3>
+            </div>
+            <div className="space-y-4">
+              <div className="space-y-1.5">
+                <label className="label-caps">Issues Raised</label>
+                <textarea rows={3} className="input-field resize-none" placeholder="Issues and concerns raised by community members…"
+                  value={form.issuesRaised} onChange={set('issuesRaised')} />
+              </div>
+              <div className="space-y-1.5">
+                <label className="label-caps">Actions Committed</label>
+                <textarea rows={3} className="input-field resize-none" placeholder="Actions committed by officers or councillors…"
+                  value={form.actionsCommitted} onChange={set('actionsCommitted')} />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="label-caps">Key Outcomes</label>
+                  <textarea rows={2} className="input-field resize-none" placeholder="Overall outcomes of the session…"
+                    value={form.keyOutcomes} onChange={set('keyOutcomes')} />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="label-caps">Feedback Incorporation Status</label>
+                  <select className="input-field h-[68px]" value={form.feedbackIncorporated} onChange={set('feedbackIncorporated')}>
+                    <option value="NO">No (Not yet acted upon)</option>
+                    <option value="PARTIAL">Partial (Some actions taken)</option>
+                    <option value="YES">Yes (Fully incorporated)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Section 5: Documentation */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <span className="w-1 h-4 bg-primary"></span>
+              <h3 className="label-caps !text-foreground">5. Documentation</h3>
+            </div>
+            <div className="p-6 border border-dashed border-border bg-muted/10 flex flex-col items-center justify-center gap-3">
+              <input ref={fileRef} type="file" accept=".pdf,.jpg,.jpeg,.png,.xlsx" className="hidden" onChange={handleFile} />
+              {attendanceFile ? (
+                <div className="w-full flex items-center justify-between bg-card border border-border p-3">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-emerald-500/10 rounded-none text-emerald-500">
+                      <FileText className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-bold text-foreground uppercase tracking-tight">{attendanceFile.name}</p>
+                      <p className="text-[9px] text-muted-foreground uppercase">{(attendanceFile.size / 1024).toFixed(0)} KB</p>
+                    </div>
+                  </div>
+                  <button type="button" onClick={() => setAttendanceFile(undefined)} className="p-2 hover:bg-destructive/5 text-muted-foreground hover:text-destructive transition-colors">
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <Upload className="w-8 h-8 text-muted-foreground/30" />
+                  <div className="text-center">
+                    <button type="button" onClick={() => fileRef.current?.click()} className="text-[10px] font-bold text-primary hover:underline uppercase tracking-widest">
+                      Upload Attendance Sheet
+                    </button>
+                    <p className="text-[9px] text-muted-foreground uppercase mt-1">PDF, JPG, PNG or Excel (Max 10MB)</p>
+                  </div>
+                </>
+              )}
+              {fileError && <p className="text-[9px] text-destructive font-bold uppercase">{fileError}</p>}
+            </div>
+          </div>
+
+          <div className="pt-6 border-t border-border flex gap-3">
+            <button type="button" onClick={onClose} className="btn-outline flex-1 py-4">Cancel</button>
+            <button type="submit" className="btn-primary flex-1 py-4">Save Community Session</button>
           </div>
         </form>
       </motion.div>

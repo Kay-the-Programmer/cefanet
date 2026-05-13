@@ -172,7 +172,7 @@ export const LoginPage: React.FC = () => {
               </div>
 
               <div className="space-y-2">
-                <label className="label-caps">Security Token / Password</label>
+                <label className="label-caps">Password</label>
                 <div className="relative">
                   <Lock className="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/40" />
                   <input
@@ -209,10 +209,6 @@ export const LoginPage: React.FC = () => {
           {!mfaPendingId && (
             <div className="mt-8 pt-8 border-t border-border/50 text-center">
               <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-[0.3em] mb-6">Demo Access Accounts</p>
-
-              <p className="text-[9px] text-amber-500 uppercase tracking-wider mb-4 font-bold">
-                Internal roles require MFA — demo code <span className="font-mono">000000</span>
-              </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {DEMO_ACCOUNTS.map(acc => (

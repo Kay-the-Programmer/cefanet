@@ -156,7 +156,7 @@ export const RegisterPage: React.FC = () => {
               </div>
 
               <div className="space-y-2">
-                <label className="label-caps">Security Token / Password</label>
+                <label className="label-caps">Password</label>
                 <input 
                   type="password" 
                   className="w-full bg-muted border border-border px-4 py-4 text-[12px] font-bold uppercase tracking-widest focus:border-primary outline-none transition-all"

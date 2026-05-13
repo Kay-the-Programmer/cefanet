@@ -6,14 +6,14 @@ import { motion, AnimatePresence } from 'motion/react';
 
 /** All 8 roles defined in UserRole, mapped to the corresponding seeded user. */
 const DEMO_ACCOUNTS: Array<{ email: string; name: string; label: string; scope: string }> = [
-  { email: 's.mulenga@finance.gov.zm',     name: 'Sarah Mulenga',     label: 'System Administrator', scope: 'National · Full access' },
-  { email: 'g.lunganyana@me.gov.zm',       name: 'Godfrey Lunganyana', label: 'M&E Officer',         scope: 'National · Read-all + targets' },
-  { email: 'm.kabwe@council.gov.zm',       name: 'Mwansa Kabwe',      label: 'Council Officer',      scope: 'Lusaka Central' },
-  { email: 'n.banda@finance.gov.zm',       name: 'Natasha Banda',     label: 'Finance Officer',      scope: 'Lusaka Central · Disbursements' },
-  { email: 'b.chungu@field.gov.zm',        name: 'Bwalya Chungu',     label: 'Field Officer',        scope: 'Lusaka Central · Monitoring' },
-  { email: 'k.phiri@audit.gov.zm',         name: 'Kelvin Phiri',      label: 'Auditor',              scope: 'National · Read-only' },
-  { email: 'j.tembo@example.com',          name: 'John Tembo',        label: 'Beneficiary',          scope: 'Bursary recipient' },
-  { email: 'jane.doe@transparency.org',    name: 'Jane Doe',          label: 'Public User',          scope: 'Citizen · Scorecards' },
+  { email: 's.mulenga@finance.gov.zm', name: 'Sarah Mulenga', label: 'System Administrator', scope: 'National · Full access' },
+  { email: 'g.lunganyana@me.gov.zm', name: 'Godfrey Lunganyana', label: 'M&E Officer', scope: 'National · Read-all + targets' },
+  { email: 'm.kabwe@council.gov.zm', name: 'Mwansa Kabwe', label: 'Council Officer', scope: 'Lusaka Central' },
+  { email: 'n.banda@finance.gov.zm', name: 'Natasha Banda', label: 'Finance Officer', scope: 'Lusaka Central · Disbursements' },
+  { email: 'b.chungu@field.gov.zm', name: 'Bwalya Chungu', label: 'Field Officer', scope: 'Lusaka Central · Monitoring' },
+  { email: 'k.phiri@audit.gov.zm', name: 'Kelvin Phiri', label: 'Auditor', scope: 'National · Read-only' },
+  { email: 'j.tembo@example.com', name: 'John Tembo', label: 'Beneficiary', scope: 'Bursary recipient' },
+  { email: 'jane.doe@transparency.org', name: 'Jane Doe', label: 'Public User', scope: 'Citizen · Scorecards' },
 ];
 
 export const LoginPage: React.FC = () => {
@@ -89,7 +89,7 @@ export const LoginPage: React.FC = () => {
       <div className="absolute -top-24 -left-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
       <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
 
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-md"
@@ -105,7 +105,7 @@ export const LoginPage: React.FC = () => {
           </div>
 
           {error && (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               className="mb-8 bg-destructive/10 border border-destructive/20 p-4 flex items-start gap-3"
@@ -155,95 +155,95 @@ export const LoginPage: React.FC = () => {
               </div>
             </form>
           ) : (
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-2">
-              <label className="label-caps">Personnel Email</label>
-              <div className="relative">
-                <Mail className="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/40" />
-                <input 
-                  type="email" 
-                  className="w-full bg-muted border border-border pl-12 pr-4 py-4 text-[12px] font-bold uppercase tracking-widest focus:border-primary outline-none transition-all placeholder:text-muted-foreground/20"
-                  placeholder="name@government.gov.zm"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="space-y-2">
+                <label className="label-caps">Personnel Email</label>
+                <div className="relative">
+                  <Mail className="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/40" />
+                  <input
+                    type="email"
+                    className="w-full bg-muted border border-border pl-12 pr-4 py-4 text-[12px] font-bold uppercase tracking-widest focus:border-primary outline-none transition-all placeholder:text-muted-foreground/20"
+                    placeholder="name@government.gov.zm"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="space-y-2">
-              <label className="label-caps">Security Token / Password</label>
-              <div className="relative">
-                <Lock className="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/40" />
-                <input 
-                  type="password" 
-                  className="w-full bg-muted border border-border pl-12 pr-4 py-4 text-[12px] font-bold uppercase tracking-widest focus:border-primary outline-none transition-all placeholder:text-muted-foreground/20"
-                  placeholder="••••••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
+              <div className="space-y-2">
+                <label className="label-caps">Security Token / Password</label>
+                <div className="relative">
+                  <Lock className="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/40" />
+                  <input
+                    type="password"
+                    className="w-full bg-muted border border-border pl-12 pr-4 py-4 text-[12px] font-bold uppercase tracking-widest focus:border-primary outline-none transition-all placeholder:text-muted-foreground/20"
+                    placeholder="••••••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                </div>
               </div>
-            </div>
 
-            <button 
-              type="submit" 
-              disabled={isSubmitting}
-              className="w-full btn-primary py-5 text-[11px] flex items-center justify-center gap-3 group disabled:opacity-50"
-            >
-              {isSubmitting ? (
-                <>
-                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  AUTHENTICATING...
-                </>
-              ) : (
-                <>
-                  LOGIN
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </>
-              )}
-            </button>
-          </form>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full btn-primary py-5 text-[11px] flex items-center justify-center gap-3 group disabled:opacity-50"
+              >
+                {isSubmitting ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    AUTHENTICATING...
+                  </>
+                ) : (
+                  <>
+                    LOGIN
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </>
+                )}
+              </button>
+            </form>
           )}
 
           {!mfaPendingId && (
-          <div className="mt-8 pt-8 border-t border-border/50 text-center">
-            <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-[0.3em] mb-6">Demo Access Protocols</p>
-            
-            <p className="text-[9px] text-amber-500 uppercase tracking-wider mb-4 font-bold">
-              Internal roles require MFA — demo code <span className="font-mono">000000</span>
-            </p>
+            <div className="mt-8 pt-8 border-t border-border/50 text-center">
+              <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-[0.3em] mb-6">Demo Access Accounts</p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {DEMO_ACCOUNTS.map(acc => (
-                <button
-                  key={acc.email}
-                  type="button"
-                  onClick={() => handleDemoLogin(acc.email)}
-                  disabled={isSubmitting}
-                  className="group flex items-center justify-between p-3 bg-muted border border-border hover:border-primary transition-all text-left disabled:opacity-50"
-                >
-                  <div>
-                    <p className="text-[10px] font-black uppercase text-foreground">{acc.name}</p>
-                    <p className="text-[9px] font-bold text-primary uppercase">{acc.label}</p>
-                    <p className="text-[8px] font-bold text-muted-foreground/70 uppercase tracking-wider mt-0.5">{acc.scope}</p>
-                  </div>
-                  <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
-                </button>
-              ))}
-            </div>
-
-            <div className="mt-8 pt-6 border-t border-border/50 flex flex-col items-center gap-4">
-              <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-[0.2em]">Authorized Access Only</p>
-              <Link to="/register" className="text-[10px] font-bold text-primary uppercase tracking-widest hover:underline transition-all">
-                Request New Personnel Account
-              </Link>
-              <p className="text-[8px] text-muted-foreground/60 uppercase mt-2 leading-relaxed max-w-[280px]">
-                Unauthorized attempts to access this system are monitored and reported.
-                By logging in, you agree to the National Cybersecurity Framework terms.
+              <p className="text-[9px] text-amber-500 uppercase tracking-wider mb-4 font-bold">
+                Internal roles require MFA — demo code <span className="font-mono">000000</span>
               </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {DEMO_ACCOUNTS.map(acc => (
+                  <button
+                    key={acc.email}
+                    type="button"
+                    onClick={() => handleDemoLogin(acc.email)}
+                    disabled={isSubmitting}
+                    className="group flex items-center justify-between p-3 bg-muted border border-border hover:border-primary transition-all text-left disabled:opacity-50"
+                  >
+                    <div>
+                      <p className="text-[10px] font-black uppercase text-foreground">{acc.name}</p>
+                      <p className="text-[9px] font-bold text-primary uppercase">{acc.label}</p>
+                      <p className="text-[8px] font-bold text-muted-foreground/70 uppercase tracking-wider mt-0.5">{acc.scope}</p>
+                    </div>
+                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
+                  </button>
+                ))}
+              </div>
+
+              <div className="mt-8 pt-6 border-t border-border/50 flex flex-col items-center gap-4">
+                <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-[0.2em]">Authorized Access Only</p>
+                <Link to="/register" className="text-[10px] font-bold text-primary uppercase tracking-widest hover:underline transition-all">
+                  Request New Personnel Account
+                </Link>
+                <p className="text-[8px] text-muted-foreground/60 uppercase mt-2 leading-relaxed max-w-[280px]">
+                  Unauthorized attempts to access this system are monitored and reported.
+                  By logging in, you agree to the National Cybersecurity Framework terms.
+                </p>
+              </div>
             </div>
-          </div>
           )}
         </div>
 
